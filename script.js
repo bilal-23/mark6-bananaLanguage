@@ -10,6 +10,9 @@ async function translate() {
     try {
         const res = await fetch(url + text);
         const data = await res.json();
+        if (res.status === 429) {
+            throw new Error(data.error.message)
+        }
         const translatedText = data.contents.translated;
         outputText.textContent = translatedText;
     }
